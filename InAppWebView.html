@@ -1,0 +1,183 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <button onClick="FBPurchase('1000000','VND')">FBPurchase</button>
+        <button onClick="emitFirebaseEvent('register2','test','test1')">emitFirebaseEvent</button>
+
+
+        <script>
+
+            //付费事件
+            function FBPurchase(amount, currency)
+
+            {
+                toAppF(amount,currency);
+			
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // 付费
+            try
+            {
+                 //var recharge = {amount,currency};
+                 var recharge = amount + "###" +currency;
+                 Toast.postMessage(recharge);
+            }
+            catch(error)
+            {
+            //alert(error)
+            }
+			
+////////////////////////////////////////////////////////////////////////////////////////////////
+            }
+
+            //注册事件
+            function emitFirebaseEvent(event_name, key, value)
+
+            {
+                toAppRegister( key, value);
+			
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // 注册
+            try
+            {
+                //var register = {event_name,key,value};
+                var register =  "event_name=" + event_name + "###key=" + key + "###value="+value;
+                Toast.postMessage(register);
+            }
+            catch(error)
+            {
+            //alert(error)
+            }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+            }
+
+            function c(t, e) {
+            var s = o();
+            if (s && s.jsbrige && 1 == s.jsbrige) {
+                try {
+                    AndroidEM.onPurchase(t, e.replace(/\s/g, ""))
+                } catch (t) {}
+                try {
+                    window.ANDROID_JS_BRIDGE.gree_page("recharge")
+                } catch (t) {}
+                try {
+                    var i = t + "###" + e;
+                    Toast.postMessage(i)
+                } catch (t) {}
+                try {
+                    window.webkit.messageHandlers.bridge.postMessage({
+                        msg: "recharge"
+                    })
+                } catch (t) {}
+                try {
+                    var a = {
+                        event: "recharge",
+                        eventParms: {
+                            amount: t,
+                            currency: e
+                        }
+                    };
+                    navigator.userAgent.match(/(iPhone|iPod|iPad);?/i) ? window.webkit.messageHandlers.clickEvent.postMessage(a) : navigator.userAgent.match(/android/i) && (window.clickEvent && window.clickEvent.postMessage ? window.clickEvent.postMessage(JSON.stringify(a)) : window.flutter_inappwebview && window.flutter_inappwebview.callHandler && window.flutter_inappwebview.callHandler("clickEvent", JSON.stringify(a)))
+                } catch (t) {}
+                try {
+                    -1 < navigator.userAgent.indexOf("UniWebView") && (location.href = "uniwebview://purchase?amount=" + t + "&currency=" + e),
+                    -1 < navigator.userAgent.indexOf("cocos-sdgame") && (document.location.href = "tococoskey://event=recharge&amount=" + t + "&currency=" + e + "&from=cocos")
+                } catch (t) {}
+                try {
+                    window.AnalyticsWebInterface && window.AnalyticsWebInterface.onEvent("purchase", {
+                        price: t
+                    })
+                } catch (t) {}
+                try {
+                    "function" == typeof fbq && fbq("track", "Purchase", {
+                        value: 0,
+                        currency: "USD"
+                    })
+                } catch (t) {}
+                try {
+                    window.AnalyticsWebInterface && window.AnalyticsWebInterface.onPurchase(t, e)
+                } catch (t) {}
+            }
+        }
+        function h(t, e, s) {
+    
+            var i = o();
+            if (i && i.jsbrige && 1 == i.jsbrige) {
+                try {
+                    AndroidEM.firebaseEvent(t, e, s)
+                } catch (t) {}
+                try {
+                    window.ANDROID_JS_BRIDGE.gree_page("register")
+                } catch (t) {}
+                try {
+                    var a = "event_name=" + t + "###key=" + e + "###value=" + s;
+                    Toast.postMessage(a)
+                } catch (t) {}
+                try {
+                    window.webkit.messageHandlers.bridge.postMessage({
+                        msg: "register"
+                    })
+                } catch (t) {}
+                try {
+                    var n = {
+                        event: "register",
+                        eventParms: {
+                            key: e,
+                            value: s
+                        }
+                    };
+                    navigator.userAgent.match(/(iPhone|iPod|iPad);?/i) ? window.webkit.messageHandlers.clickEvent.postMessage(n) : navigator.userAgent.match(/android/i) && (window.clickEvent && window.clickEvent.postMessage ? window.clickEvent.postMessage(JSON.stringify(n)) : window.flutter_inappwebview && window.flutter_inappwebview.callHandler && window.flutter_inappwebview.callHandler("clickEvent", JSON.stringify(n)))
+                } catch (t) {}
+                try {
+                    -1 < navigator.userAgent.indexOf("UniWebView") && (location.href = "uniwebview://register?id=" + Math.random()),
+                    -1 < navigator.userAgent.indexOf("cocos-sdgame") && (document.location.href = "tococoskey://event=register&from=cocos")
+                } catch (t) {}
+            }
+        }
+
+        function toAppRegister(e,s){
+            try {
+                    var n = {
+                        event: "register",
+                        eventParms: {
+                            key: e,
+                            value: s
+                        }
+                    };
+                    window.flutter_inappwebview.callHandler("clickEvent", JSON.stringify(n));
+                } catch (t) {}
+               
+
+
+        }
+
+        function toAppF(e,s){
+            try {
+                var a = {
+                        event: "recharge",
+                        eventParms: {
+                            amount: t,
+                            currency: e
+                        }
+                    };
+                    window.flutter_inappwebview.callHandler("clickEvent", JSON.stringify(a));
+                } catch (t) {}
+               
+        }
+
+        </script>
+    </body>
+</html>
